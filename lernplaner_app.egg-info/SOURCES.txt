@@ -1,0 +1,13 @@
+README.md
+setup.cfg
+setup.py
+versioneer.py
+lernplaner_app.egg-info/PKG-INFO
+lernplaner_app.egg-info/SOURCES.txt
+lernplaner_app.egg-info/dependency_links.txt
+lernplaner_app.egg-info/top_level.txt
+website/__init__.py
+website/_version.py
+website/auth.py
+website/models.py
+website/views.py
