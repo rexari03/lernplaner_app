@@ -1,6 +1,6 @@
 export const fetchHelloWorld = async () => {
     const headers = {
-        'Authorization': 'Bearer ywPjSh5r4Q2kgKOdzxaSvTu1RM4VU3o7',
+        'Authorization': '',
     };
     const response = await fetch('https://wndbi.philipptrashman.dev/api/hello', { headers, mode: 'cors' })
 

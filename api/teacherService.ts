@@ -2,7 +2,7 @@ import {Student} from "@/types/student";
 
 export const fetchAllStudents = async () => {
     const headers = {
-        'Authorization': 'Bearer ywPjSh5r4Q2kgKOdzxaSvTu1RM4VU3o7',
+        'Authorization': '',
     };
     const response = await fetch('https://wndbi.philipptrashman.dev/api/students', {
         method: 'GET',

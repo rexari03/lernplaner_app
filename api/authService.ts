@@ -1,7 +1,7 @@
 export const loginUser = async (username: string, password: string) => {
     const headers = {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ywPjSh5r4Q2kgKOdzxaSvTu1RM4VU3o7',
+        'Authorization': '',
     };
 
     const body = JSON.stringify({
