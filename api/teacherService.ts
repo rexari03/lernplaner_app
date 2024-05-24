@@ -2,9 +2,9 @@ import {Student} from "@/types/student";
 
 export const fetchAllStudents = async () => {
     const headers = {
-        'Authorization': '',
+        'Authorization': `Bearer ${process.env.NEXT_PUBLIC_AUTH_TOKEN}`,
     };
-    const response = await fetch('https://wndbi.philipptrashman.dev/api/students', {
+    const response = await fetch('https://wndbi.philipptrashman.dev/api/teachers', {
         method: 'GET',
         headers,
         mode: 'cors'

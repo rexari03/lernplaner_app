@@ -1,6 +1,6 @@
 export const fetchHelloWorld = async () => {
     const headers = {
-        'Authorization': '',
+        'Authorization': `Bearer ${process.env.NEXT_PUBLIC_AUTH_TOKEN}`,
     };
     const response = await fetch('https://wndbi.philipptrashman.dev/api/hello', { headers, mode: 'cors' })
 

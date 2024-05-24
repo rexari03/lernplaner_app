@@ -1,7 +1,7 @@
 export const loginUser = async (username: string, password: string) => {
     const headers = {
         'Content-Type': 'application/json',
-        'Authorization': '',
+        'Authorization': `Bearer ${process.env.NEXT_PUBLIC_AUTH_TOKEN}`,
     };
 
     const body = JSON.stringify({

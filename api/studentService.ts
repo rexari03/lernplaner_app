@@ -2,12 +2,11 @@ import {Student} from "@/types/student";
 
 export const fetchAllStudents = async () => {
     const headers = {
-        'Authorization': '',
+        'Authorization': `Bearer ${process.env.NEXT_PUBLIC_AUTH_TOKEN}`,
     };
     const response = await fetch('https://wndbi.philipptrashman.dev/api/students', {
         method: 'GET',
         headers,
-        mode: 'cors'
     })
 
     if (response.status != 200) {

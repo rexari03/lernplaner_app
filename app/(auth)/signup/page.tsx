@@ -1,9 +1,9 @@
-import SignupForm from "@/components/signup-form";
+import AddForm from "@/components/add-form";
 
 export default function SignUp() {
     return (
         <main>
-            <SignupForm/>
+            <AddForm/>
         </main>
     );
 }
