@@ -5,18 +5,18 @@ import Table from 'react-bootstrap/Table';
 import Spinner from 'react-bootstrap/Spinner';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import {fetchAllStudents} from "@/api/studentService";
-import {Student} from "@/types/student";
+import {StudentBrief} from "@/types/studentBrief";
 
 const StudentsPage = () => {
-    const [students, setStudents] = useState<Student[]>([]);
+    const [students, setStudents] = useState<StudentBrief[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage, setItemsPerPage] = useState(20);
+    const [itemsPerPage] = useState(20);
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         const fetchStudents = async () => {
             setIsLoading(true);
-            const users: Student[] = await fetchAllStudents();
+            const users: StudentBrief[] = await fetchAllStudents();
             setStudents(users);
             setIsLoading(false);
         }

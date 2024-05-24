@@ -5,7 +5,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
-import {addNewUser} from "@/api/addUserService";
+import {addNewUser} from "@/api/userService";
 
 interface Values {
     username: string;

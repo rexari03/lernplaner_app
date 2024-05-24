@@ -1,4 +1,4 @@
-import {Student} from "@/types/student";
+import {StudentBrief} from "@/types/studentBrief";
 
 export const fetchAllStudents = async () => {
     const headers = {
@@ -12,6 +12,6 @@ export const fetchAllStudents = async () => {
     if (response.status != 200) {
         throw new Error(response.statusText);
     } else {
-        return await response.json() as Student[]
+        return await response.json() as StudentBrief[]
     }
 };

@@ -1,6 +1,7 @@
 import {Subject} from "@/types/subject";
 
 export type Teacher = {
-    id: string;
+    id: number;
+    school_class: number | null;
     school_subjects: Subject[];
 }
