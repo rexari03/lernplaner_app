@@ -1,6 +1,6 @@
-import {StudentBrief} from "@/types/studentBrief";
+import { Teacher } from "@/types/teacher";
 
-export const fetchAllStudents = async () => {
+export const getAllTeachers = async () => {
     const headers = {
         'Authorization': `Bearer ${process.env.NEXT_PUBLIC_AUTH_TOKEN}`,
     };
@@ -13,6 +13,6 @@ export const fetchAllStudents = async () => {
     if (response.status != 200) {
         throw new Error(response.statusText);
     } else {
-        return await response.json() as StudentBrief[]
+        return await response.json() as Teacher[]
     }
 };
