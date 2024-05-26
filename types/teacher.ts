@@ -1,7 +1,6 @@
-import {Subject} from "@/types/subject";
+import { Account } from "./account";
 
 export type Teacher = {
     id: number;
-    school_class: number | null;
-    school_subjects: Subject[];
+    account: Account;
 }

@@ -4,11 +4,11 @@ import React, { useState, useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
 import Spinner from 'react-bootstrap/Spinner';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import {fetchAllStudents} from "@/api/studentService";
-import {Account} from "@/types/account";
+import {getAllTeachers} from "@/api/teacherService";
+import { Teacher } from '@/types/teacher';
 
 const StudentsPage = () => {
-    const [students, setStudents] = useState<Account[]>([]);
+    const [students, setStudents] = useState<Teacher[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(20);
     const [isLoading, setIsLoading] = useState(false);
@@ -16,7 +16,7 @@ const StudentsPage = () => {
     useEffect(() => {
         const fetchUsers = async () => {
             setIsLoading(true);
-            const users: Account[] = await fetchAllStudents();
+            const users: Teacher[] = await getAllTeachers();
             setStudents(users);
             setIsLoading(false);
         }
@@ -55,25 +55,25 @@ const StudentsPage = () => {
 
     return (
         <div>
-            <h1 className={"text-center display-4"}>Schüler</h1>
+            <h1 className={"text-center display-4"}>Lehrer</h1>
             {students.length > 0 ? (
                 <>
                     <Table striped bordered hover>
                         <thead>
                         <tr>
                             <th>ID</th>
+                            <th>Benutzername</th>
                             <th>Name</th>
                             <th>Nachname</th>
-                            <th>Geburtstag</th>
                         </tr>
                         </thead>
                         <tbody>
                         {currentItems.map((teachers, index) => (
                             <tr key={index}>
                                 <td>{teachers.id}</td>
-                                <td>{teachers.name}</td>
-                                <td>{teachers.last_name}</td>
-                                <td>{teachers.birthday}</td>
+                                <td>{teachers.account.username}</td>
+                                <td>{teachers.account.name}</td>
+                                <td>{teachers.account.last_name}</td>
                             </tr>
                         ))}
                         </tbody>

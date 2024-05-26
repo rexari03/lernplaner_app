@@ -66,6 +66,7 @@ const StudentsPage = () => {
                         <thead>
                         <tr>
                             <th>ID</th>
+                            <th>Benutzername</th>
                             <th>Name</th>
                             <th>Nachname</th>
                             <th>Geburtstag</th>
@@ -75,6 +76,7 @@ const StudentsPage = () => {
                         {currentItems.map((student, index) => (
                             <tr key={index}>
                                 <td>{student.id}</td>
+                                <td>{student.account.username}</td>
                                 <td>{student.account.name}</td>
                                 <td>{student.account.last_name}</td>
                                 <td>{student.account.birthday}</td>
