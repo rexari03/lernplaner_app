@@ -6,12 +6,14 @@ import Spinner from 'react-bootstrap/Spinner';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import {fetchAllStudents} from "@/api/studentService";
 import {StudentBrief} from "@/types/studentBrief";
+import {useRouter} from "next/navigation";
 
 const StudentsPage = () => {
     const [students, setStudents] = useState<StudentBrief[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(20);
     const [isLoading, setIsLoading] = useState(false);
+    const router = useRouter();
 
     useEffect(() => {
         const fetchStudents = async () => {
@@ -74,7 +76,7 @@ const StudentsPage = () => {
                         </thead>
                         <tbody>
                         {currentItems.map((student, index) => (
-                            <tr key={index}>
+                            <tr key={index} onClick={() => router.push(`/data/profile/${student.account.username}`)}>
                                 <td>{student.id}</td>
                                 <td>{student.account.username}</td>
                                 <td>{student.account.name}</td>

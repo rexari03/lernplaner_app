@@ -5,7 +5,7 @@ import Table from 'react-bootstrap/Table';
 import Spinner from 'react-bootstrap/Spinner';
 import Button from 'react-bootstrap/Button';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import {fetchAllUsers} from "@/api/userService";
+import {getAllUsers} from "@/api/userService";
 import {Account} from "@/types/account";
 import AddForm from "@/components/add-form";
 import {useRouter} from "next/navigation";
@@ -20,7 +20,7 @@ const UsersPage = () => {
 
     const fetchUsers = async () => {
         setIsLoading(true);
-        const users: Account[] = await fetchAllUsers();
+        const users: Account[] = await getAllUsers();
         setUsers(users);
         setIsLoading(false);
     }

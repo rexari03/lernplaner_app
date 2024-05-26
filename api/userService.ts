@@ -1,7 +1,6 @@
-import {Account} from "@/types/account";
 import {User} from "@/types/user";
 
-export const fetchAllUsers = async () => {
+export const getAllUsers = async () => {
     const headers = {
         'Authorization': `Bearer ${process.env.NEXT_PUBLIC_AUTH_TOKEN}`,
     };
@@ -14,11 +13,11 @@ export const fetchAllUsers = async () => {
     if (response.status != 200) {
         throw new Error(response.statusText);
     } else {
-        return await response.json() as Account[]
+        return await response.json() as User[]
     }
 };
 
-export const fetchUserByUsername = async (username: string) => {
+export const getUserByUsername = async (username: string) => {
     const headers = {
         'Authorization': `Bearer ${process.env.NEXT_PUBLIC_AUTH_TOKEN}`,
     };

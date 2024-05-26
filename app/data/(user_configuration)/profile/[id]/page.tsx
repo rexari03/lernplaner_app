@@ -1,8 +1,8 @@
 'use client'
 
-import {deleteUserByUsername, fetchUserByUsername} from "@/api/userService";
+import {deleteUserByUsername, getUserByUsername} from "@/api/userService";
 import { User } from "@/types/user";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Card, Spinner, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useRouter } from 'next/navigation'
@@ -18,7 +18,7 @@ const ProfilePage = ({ params }: { params: Params }) => {
 
     useEffect(() => {
         const fetchUser = async () => {
-            const user = await fetchUserByUsername(params.id);
+            const user = await getUserByUsername(params.id);
             console.log(user);
             setUser(user);
             setIsLoading(false);
@@ -41,7 +41,9 @@ const ProfilePage = ({ params }: { params: Params }) => {
     if (isLoading) {
         return (
             <Container className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
-                <Spinner animation="border" variant="primary" />
+                <Spinner animation="border" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </Spinner>
             </Container>
         );
     }
@@ -73,6 +75,9 @@ const ProfilePage = ({ params }: { params: Params }) => {
                             </Card.Text>
                             <Card.Text>
                                 <strong>Birthday:</strong> {user?.birthday}
+                            </Card.Text>
+                            <Card.Text>
+                                {user?.teacher ? "User is a Teacher" : user?.student ? "User is a Student" : "User is a parent"}
                             </Card.Text>
                             <button onClick={handleBack} className="btn btn-secondary mt-3">Back to Users</button>
                         </Card.Body>

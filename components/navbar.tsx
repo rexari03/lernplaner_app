@@ -25,8 +25,8 @@ const NavBar = () => {
                                               className={pathname == "/data/students" ? "active" : ""}>Schüler</Nav.Link>
                                     <Nav.Link href="/data/teachers"
                                               className={pathname == "/data/teachers" ? "active" : ""}>Lehrer</Nav.Link>
-                                    <Nav.Link href="/data/users"
-                                              className={pathname == "/data/users" ? "active" : ""}>Benutzer</Nav.Link>
+                                    <Nav.Link href="/data/classes"
+                                              className={pathname == "/data/classes" ? "active" : ""}>Klassen</Nav.Link>
                                 </>
                             ) : null
                         }
@@ -39,8 +39,8 @@ const NavBar = () => {
                         {
                             isLoggedIn ? (
                                 <>
-                                    <Nav.Link href="/me"
-                                              className={pathname == "/me" ? "active" : ""}>Profil</Nav.Link>
+                                    <Nav.Link href="/data/users"
+                                              className={pathname == "/data/users" ? "active" : ""}>Benutzerverwaltung</Nav.Link>
 
                                     <Nav.Link href="/logout"
                                               className={pathname == "/logout" ? "active" : ""}>Logout</Nav.Link>
