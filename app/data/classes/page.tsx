@@ -4,32 +4,30 @@ import React, { useState, useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
 import Spinner from 'react-bootstrap/Spinner';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import {getAllTeachers} from "@/api/teacherService";
-import { Teacher } from '@/types/teacher';
-import {useRouter} from "next/navigation";
+import {Class} from "@/types/class";
+import {getAllClasses} from "@/api/classService";
 
 const StudentsPage = () => {
-    const [students, setStudents] = useState<Teacher[]>([]);
+    const [classes, setClasses] = useState<Class[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(20);
     const [isLoading, setIsLoading] = useState(false);
-    const router = useRouter();
 
     useEffect(() => {
-        const fetchUsers = async () => {
+        const fetchClasses = async () => {
             setIsLoading(true);
-            const users: Teacher[] = await getAllTeachers();
-            setStudents(users);
+            const users: Class[] = await getAllClasses();
+            setClasses(users);
             setIsLoading(false);
         }
-        fetchUsers();
+        fetchClasses();
     }, []);
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = students.slice(indexOfFirstItem, indexOfLastItem);
+    const currentItems = classes.slice(indexOfFirstItem, indexOfLastItem);
 
-    const totalPages = Math.ceil(students.length / itemsPerPage);
+    const totalPages = Math.ceil(classes.length / itemsPerPage);
 
     const handleNext = () => {
         if (currentPage < totalPages) {
@@ -57,25 +55,23 @@ const StudentsPage = () => {
 
     return (
         <div>
-            <h1 className={"text-center display-4"}>Lehrer</h1>
-            {students.length > 0 ? (
+            <h1 className={"text-center display-4"}>Klassen</h1>
+            {classes.length > 0 ? (
                 <>
                     <Table striped bordered hover>
                         <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Benutzername</th>
-                            <th>Name</th>
-                            <th>Nachname</th>
+                            <th>Klassenname</th>
+                            <th>Klassenlehrer</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {currentItems.map((teacher, index) => (
-                            <tr key={index} onClick={() => router.push(`/data/profile/${teacher.account.username}`)}>
-                                <td>{teacher.id}</td>
-                                <td>{teacher.account.username}</td>
-                                <td>{teacher.account.name}</td>
-                                <td>{teacher.account.last_name}</td>
+                        {currentItems.map((classes, index) => (
+                            <tr key={index}>
+                                <td>{classes.id}</td>
+                                <td>{classes.name}</td>
+                                <td>{classes.head_teacher_name}</td>
                             </tr>
                         ))}
                         </tbody>
