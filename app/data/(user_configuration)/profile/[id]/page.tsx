@@ -69,7 +69,7 @@ const ProfilePage = ({ params }: { params: Params }) => {
             birthday: birthday
         };
         setIsLoading(true);
-        await updateUserByUsername(updatedUser);
+        await updateUserByUsername(updatedUser, user!.username);
         setIsEditing(false);
         setIsLoading(false);
     }
