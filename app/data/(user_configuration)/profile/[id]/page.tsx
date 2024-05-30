@@ -1,9 +1,9 @@
 'use client'
 
-import {deleteUserByUsername, getUserByUsername} from "@/api/userService";
+import {deleteUserByUsername, getUserByUsername, updateUserByUsername} from "@/api/userService";
 import { User } from "@/types/user";
 import React, { useEffect, useState } from "react";
-import { Container, Card, Spinner, Row, Col } from 'react-bootstrap';
+import { Container, Card, Spinner, Row, Col, Form, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useRouter } from 'next/navigation'
 
@@ -13,14 +13,26 @@ interface Params {
 
 const ProfilePage = ({ params }: { params: Params }) => {
     const [user, setUser] = useState<User | null>(null);
+
+    const [username, setUsername] = useState("");
+    const [name, setName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [email, setEmail] = useState("");
+    const [birthday, setBirthday] = useState("");
+
+    const [isEditing, setIsEditing] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const router = useRouter();
 
     useEffect(() => {
         const fetchUser = async () => {
             const user = await getUserByUsername(params.id);
-            console.log(user);
             setUser(user);
+            setUsername(user.username);
+            setName(user.name);
+            setLastName(user.last_name);
+            setEmail(user.email);
+            setBirthday(user.birthday);
             setIsLoading(false);
         }
         fetchUser();
@@ -36,6 +48,30 @@ const ProfilePage = ({ params }: { params: Params }) => {
 
     const handleBack = () => {
         router.push('/data/users');
+    }
+
+    const handleEdit = () => {
+        setIsEditing(true);
+    }
+
+    const handleCancel = () => {
+        setIsEditing(false);
+    }
+
+    const handleSubmit = async (event: React.FormEvent) => {
+        event.preventDefault();
+        const updatedUser: User = {
+            ...user!,
+            username: username,
+            name: name,
+            last_name: lastName,
+            email: email,
+            birthday: birthday
+        };
+        setIsLoading(true);
+        await updateUserByUsername(updatedUser, user!.username);
+        setIsEditing(false);
+        setIsLoading(false);
     }
 
     if (isLoading) {
@@ -55,31 +91,36 @@ const ProfilePage = ({ params }: { params: Params }) => {
                     <Card>
                         <Card.Header as="h5" className="d-flex justify-content-between align-items-center">
                             User Dashboard
-                            <button onClick={handleDelete} className="btn btn-danger">Löschen</button>
+                            <div>
+                                {isEditing ? <Button onClick={handleCancel} className={"btn btn-secondary mr-5"}>Abbrechen</Button> : <Button onClick={handleEdit} className={"btn btn-secondary mr-5"}>Bearbeiten</Button>}
+                                <button onClick={handleDelete} className="btn btn-danger">Delete</button>
+                            </div>
                         </Card.Header>
                         <Card.Body>
-                            <Card.Text>
-                                <strong>ID:</strong> {user?.id}
-                            </Card.Text>
-                            <Card.Text>
-                                <strong>Username:</strong> {user?.username}
-                            </Card.Text>
-                            <Card.Text>
-                                <strong>Name:</strong> {user?.name}
-                            </Card.Text>
-                            <Card.Text>
-                                <strong>Last Name:</strong> {user?.last_name}
-                            </Card.Text>
-                            <Card.Text>
-                                <strong>Email:</strong> {user?.email}
-                            </Card.Text>
-                            <Card.Text>
-                                <strong>Birthday:</strong> {user?.birthday}
-                            </Card.Text>
-                            <Card.Text>
-                                {user?.teacher ? "User is a Teacher" : user?.student ? "User is a Student" : "User is a parent"}
-                            </Card.Text>
-                            <button onClick={handleBack} className="btn btn-secondary mt-3">Back to Users</button>
+                            <Form onSubmit={handleSubmit}>
+                                <Form.Group controlId="username">
+                                    <Form.Label>Benutzername</Form.Label>
+                                    <Form.Control type="text" value={username} onChange={(e) => setUsername(e.target.value)} disabled={!isEditing} />
+                                </Form.Group>
+                                <Form.Group controlId="name">
+                                    <Form.Label>Name</Form.Label>
+                                    <Form.Control type="text" value={name} onChange={(e) => setName(e.target.value)} disabled={!isEditing} />
+                                </Form.Group>
+                                <Form.Group controlId="lastName">
+                                    <Form.Label>Nachname</Form.Label>
+                                    <Form.Control type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} disabled={!isEditing} />
+                                </Form.Group>
+                                <Form.Group controlId="email">
+                                    <Form.Label>Email</Form.Label>
+                                    <Form.Control type="email" value={email} onChange={(e) => setEmail(e.target.value)} disabled={!isEditing} />
+                                </Form.Group>
+                                <Form.Group controlId="birthday">
+                                    <Form.Label>Birthday</Form.Label>
+                                    <Form.Control type="date" value={birthday} onChange={(e) => setBirthday(e.target.value)} disabled={!isEditing} />
+                                </Form.Group>
+                                {isEditing && <Button type="submit" variant="primary" className={"mt-3"}>Save</Button>}
+                            </Form>
+                            <button onClick={handleBack} className="btn btn-secondary mt-3">Zurück</button>
                         </Card.Body>
                     </Card>
                 </Col>

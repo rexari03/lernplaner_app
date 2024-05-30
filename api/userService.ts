@@ -80,6 +80,33 @@ export const deleteUserByUsername = async (username: string) => {
     if (response.status != 200) {
         throw new Error(response.statusText);
     } else {
-        return await response.json() as User
+        return "success"
+    }
+}
+
+export const updateUserByUsername = async (user: User, username) => {
+    const headers = {
+        'Authorization': `Bearer ${process.env.NEXT_PUBLIC_AUTH_TOKEN}`,
+        'Content-type': 'application/json',
+    };
+    const body = JSON.stringify({
+        "username": user.username,
+        "email": user.email,
+        "name": user.name,
+        "last_name": user.last_name,
+        "birthday": user.birthday
+    });
+
+    const response = await fetch(`https://wndbi.philipptrashman.dev/api/users/${username}`, {
+        method: 'PUT',
+        headers,
+        body,
+    });
+
+    if (response.status != 200) {
+        console.log(response.text());
+        throw new Error(response.statusText);
+    } else {
+        return "success"
     }
 }
