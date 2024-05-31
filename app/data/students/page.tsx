@@ -70,6 +70,16 @@ const StudentsPage = () => {
         await fetchStudents();
     };
 
+    function getClassName(school_class_id: number): string {
+        let className = "";
+        classes.forEach(oneClas => {
+            if (oneClas.id == school_class_id) {
+                className = oneClas.grade_id + oneClas.name;
+            }
+        })
+        return className
+    }
+
     if (isLoading) {
         return (
             <div className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
@@ -87,14 +97,14 @@ const StudentsPage = () => {
             <h1 className={"text-center display-4"}>Schüler</h1>
             {showAddForm ? (
                 <>
-                    <Button variant="secondary" onClick={handleCloseForm} className={"mb-2"}>
+                    <Button variant="secondary" onClick={handleCloseForm} className={"mb-2 w-100"}>
                         <i className="bi bi-x-lg"></i>
                     </Button>
                     <AddStudentForm schoolClasses={classes}/>
                 </>
             ) : (
                 <>
-                    <Button variant="secondary" onClick={() => setShowAddForm(true)} className={"mb-2"}>
+                    <Button variant="secondary" onClick={() => setShowAddForm(true)} className={"mb-2 w-100"}>
                         <i className="bi bi-plus-lg"></i>
                     </Button>
                     {students.length > 0 ? (
@@ -118,7 +128,7 @@ const StudentsPage = () => {
                                         <td>{student.account.name}</td>
                                         <td>{student.account.last_name}</td>
                                         <td>{student.account.birthday}</td>
-                                        <td>{classes[student.school_class_id-1].name}</td>
+                                        <td>{getClassName(student.school_class_id)}</td>
                                     </tr>
                                 ))}
                                 </tbody>

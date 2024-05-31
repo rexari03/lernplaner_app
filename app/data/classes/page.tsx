@@ -41,6 +41,16 @@ const StudentsPage = () => {
         }
     };
 
+    function getClassName(school_class_id: number): string {
+        let className = "";
+        classes.forEach(oneClas => {
+            if (oneClas.id == school_class_id) {
+                className = oneClas.grade_id + oneClas.name;
+            }
+        })
+        return className
+    }
+
     if (isLoading) {
         return (
             <div className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
@@ -64,14 +74,16 @@ const StudentsPage = () => {
                             <th>ID</th>
                             <th>Klassenname</th>
                             <th>Klassenlehrer</th>
+                            <th>Kürzel</th>
                         </tr>
                         </thead>
                         <tbody>
                         {currentItems.map((classes, index) => (
                             <tr key={index}>
                                 <td>{classes.id}</td>
-                                <td>{classes.name}</td>
+                                <td>{getClassName(classes.id)}</td>
                                 <td>{classes.head_teacher_name}</td>
+                                <td>{classes.head_teacher_abbreviation}</td>
                             </tr>
                         ))}
                         </tbody>
