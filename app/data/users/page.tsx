@@ -73,14 +73,14 @@ const UsersPage = () => {
             <h1 className={"text-center display-4"}>Benutzer</h1>
             {showAddForm ? (
                 <>
-                    <Button variant="secondary" onClick={handleCloseForm} className={"mb-2"}>
+                    <Button variant="secondary" onClick={handleCloseForm} className={"mb-2 w-100"}>
                         <i className="bi bi-x-lg"></i>
                     </Button>
                     <AddForm />
                 </>
             ) : (
                 <>
-                    <Button variant="secondary" onClick={() => setShowAddForm(true)} className={"mb-2"}>
+                    <Button variant="secondary" onClick={() => setShowAddForm(true)} className={"mb-2 w-100"}>
                         <i className="bi bi-plus-lg"></i>
                     </Button>
                     {users.length > 0 ? (

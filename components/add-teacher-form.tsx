@@ -1,12 +1,13 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, {useMemo, useState} from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
 import {addNewUser} from "@/api/userService";
 import {Col, Row } from 'react-bootstrap';
+import {addNewTeacher, getAllTeachers} from "@/api/teacherService";
 
 interface Values {
     username: string;
@@ -16,10 +17,11 @@ interface Values {
     name: string;
     last_name: string;
     birthday: string;
+    abbreviation: string;
 }
 
 const AddForm: React.FC = () => {
-    const [values, setValues] = useState<Values>({ username: '', email: '', password: '', confirmPassword: '', name: '', last_name: '', birthday: '' });
+    const [values, setValues] = useState<Values>({ username: '', email: '', password: '', confirmPassword: '', name: '', last_name: '', birthday: '', abbreviation: '' });
     const [error, setError] = useState<string | null>(null);
     const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
@@ -55,7 +57,7 @@ const AddForm: React.FC = () => {
 
         setError(null);
         console.log(values);
-        await addNewUser(values.username, values.email, values.password, values.name, values.last_name, values.birthday);
+        await addNewTeacher(values.username, values.email, values.password, values.name, values.last_name, values.birthday, values.abbreviation);
         setIsSubmitted(true); // Set isSubmitted to true when form is submitted successfully
     };
 
@@ -106,6 +108,10 @@ const AddForm: React.FC = () => {
                                     <Form.Group className="mb-3" controlId="formBasicConfirmPassword">
                                         <Form.Label>Passwort bestätigen</Form.Label>
                                         <Form.Control type="password" placeholder="Passwort bestätigen" name="confirmPassword" value={values.confirmPassword} onChange={handleInputChange} />
+                                    </Form.Group>
+                                    <Form.Group className={"mb-3"} controlId="formBasicAbbreviation">
+                                        <Form.Label>Kürzel</Form.Label>
+                                        <Form.Control type="text" placeholder="Kürzel eingeben" name="abbreviation" value={values.abbreviation} onChange={handleInputChange} />
                                     </Form.Group>
                                 </Col>
                             </Row>

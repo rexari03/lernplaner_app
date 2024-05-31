@@ -58,7 +58,7 @@ export const addNewUser = async (
         method: 'POST',
         headers,
         body,
-    })
+    });
 
     if (!response.ok) {
         throw new Error(response.statusText);
@@ -84,7 +84,7 @@ export const deleteUserByUsername = async (username: string) => {
     }
 }
 
-export const updateUserByUsername = async (user: User, username) => {
+export const updateUserByUsername = async (user: User, username: string) => {
     const headers = {
         'Authorization': `Bearer ${process.env.NEXT_PUBLIC_AUTH_TOKEN}`,
         'Content-type': 'application/json',
