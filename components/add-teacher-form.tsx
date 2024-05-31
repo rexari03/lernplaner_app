@@ -1,13 +1,13 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, {useMemo, useState} from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
 import {addNewUser} from "@/api/userService";
 import {Col, Row } from 'react-bootstrap';
-import {addNewTeacher} from "@/api/teacherService";
+import {addNewTeacher, getAllTeachers} from "@/api/teacherService";
 
 interface Values {
     username: string;
@@ -23,7 +23,7 @@ interface Values {
 const AddForm: React.FC = () => {
     const [values, setValues] = useState<Values>({ username: '', email: '', password: '', confirmPassword: '', name: '', last_name: '', birthday: '', abbreviation: '' });
     const [error, setError] = useState<string | null>(null);
-    const [isSubmitted, setIsSubmitted] = useState<boolean>(false); // New state variable
+    const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setValues({

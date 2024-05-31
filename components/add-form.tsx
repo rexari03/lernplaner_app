@@ -21,7 +21,7 @@ interface Values {
 const AddForm: React.FC = () => {
     const [values, setValues] = useState<Values>({ username: '', email: '', password: '', confirmPassword: '', name: '', last_name: '', birthday: '' });
     const [error, setError] = useState<string | null>(null);
-    const [isSubmitted, setIsSubmitted] = useState<boolean>(false); // New state variable
+    const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setValues({

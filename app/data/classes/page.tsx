@@ -1,26 +1,42 @@
 'use client'
 
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useMemo} from 'react';
 import Table from 'react-bootstrap/Table';
 import Spinner from 'react-bootstrap/Spinner';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import {Class} from "@/types/class";
 import {getAllClasses} from "@/api/classService";
+import Button from "react-bootstrap/Button";
+import AddStudentForm from "@/components/add-student-form";
+import AddClassForm from "@/components/add-class-form";
+import {getAllTeachers} from "@/api/teacherService";
+import {Teacher} from "@/types/teacher";
 
 const StudentsPage = () => {
     const [classes, setClasses] = useState<Class[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(20);
     const [isLoading, setIsLoading] = useState(false);
+    const [showAddForm, setShowAddForm] = useState(false);
+    const [teachers, setTeachers] = useState<Teacher[]>([]);
+
+    const fetchClasses = async () => {
+        setIsLoading(true);
+        const users: Class[] = await getAllClasses();
+        setClasses(users);
+        setIsLoading(false);
+    }
+
+    const fetchTeachers = async () => {
+        setIsLoading(true);
+        const users: Teacher[] = await getAllTeachers();
+        setTeachers(users);
+        setIsLoading(false);
+    }
 
     useEffect(() => {
-        const fetchClasses = async () => {
-            setIsLoading(true);
-            const users: Class[] = await getAllClasses();
-            setClasses(users);
-            setIsLoading(false);
-        }
         fetchClasses();
+        fetchTeachers();
     }, []);
 
     const indexOfLastItem = currentPage * itemsPerPage;
@@ -39,6 +55,11 @@ const StudentsPage = () => {
         if (currentPage > 1) {
             setCurrentPage(currentPage - 1);
         }
+    };
+
+    const handleCloseForm = async () => {
+        setShowAddForm(false);
+        await fetchClasses();
     };
 
     function getClassName(school_class_id: number): string {
@@ -66,41 +87,56 @@ const StudentsPage = () => {
     return (
         <div>
             <h1 className={"text-center display-4"}>Klassen</h1>
-            {classes.length > 0 ? (
+            {showAddForm ? (
                 <>
-                    <Table striped bordered hover>
-                        <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Klassenname</th>
-                            <th>Klassenlehrer</th>
-                            <th>Kürzel</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {currentItems.map((classes, index) => (
-                            <tr key={index}>
-                                <td>{classes.id}</td>
-                                <td>{getClassName(classes.id)}</td>
-                                <td>{classes.head_teacher_name}</td>
-                                <td>{classes.head_teacher_abbreviation}</td>
-                            </tr>
-                        ))}
-                        </tbody>
-                    </Table>
-                    <div className={"d-flex justify-content-center"}>
-                        <button onClick={handlePrevious} disabled={currentPage === 1}
-                                className="btn btn-outline-secondary mx-2">
-                            <i className="bi bi-arrow-left"></i>
-                        </button>
-                        <span className={"mx-3 align-self-center"}>Page {currentPage} of {totalPages}</span>
-                        <button onClick={handleNext} disabled={currentPage === totalPages}
-                                className="btn btn-outline-secondary mx-2">
-                            <i className="bi bi-arrow-right"></i>
-                        </button>
-                    </div>
+                    <Button variant="secondary" onClick={handleCloseForm} className={"mb-2 w-100"}>
+                        <i className="bi bi-x-lg"></i>
+                    </Button>
+                    <AddClassForm teachers={teachers}/>
                 </>
-            ) : null}
+            ) : (
+                <>
+                    <Button variant="secondary" onClick={() => setShowAddForm(true)} className={"mb-2 w-100"}>
+                        <i className="bi bi-plus-lg"></i>
+                    </Button>
+
+                    {classes.length > 0 ? (
+                        <>
+                            <Table striped bordered hover>
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Klassenname</th>
+                                    <th>Klassenlehrer</th>
+                                    <th>Kürzel</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {currentItems.map((classes, index) => (
+                                    <tr key={index}>
+                                        <td>{classes.id}</td>
+                                        <td>{getClassName(classes.id)}</td>
+                                        <td>{classes.head_teacher_name}</td>
+                                        <td>{classes.head_teacher_abbreviation}</td>
+                                    </tr>
+                                ))}
+                                </tbody>
+                            </Table>
+                            <div className={"d-flex justify-content-center"}>
+                                <button onClick={handlePrevious} disabled={currentPage === 1}
+                                        className="btn btn-outline-secondary mx-2">
+                                    <i className="bi bi-arrow-left"></i>
+                                </button>
+                                <span className={"mx-3 align-self-center"}>Page {currentPage} of {totalPages}</span>
+                                <button onClick={handleNext} disabled={currentPage === totalPages}
+                                        className="btn btn-outline-secondary mx-2">
+                                    <i className="bi bi-arrow-right"></i>
+                                </button>
+                            </div>
+                        </>
+                    ) : null}
+                </>
+            )}
         </div>
     );
 }
