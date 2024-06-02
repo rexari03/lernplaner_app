@@ -49,7 +49,7 @@ const ProfilePage = ({ params }: { params: Params }) => {
         const confirmDelete = window.confirm('Möchten Sie den Benutzer wirklich löschen?');
         if (confirmDelete) {
             await deleteUserByUsername(user!.username);
-            router.push('/data/students');
+            router.push('/data/teachers');
         }
     }
 
