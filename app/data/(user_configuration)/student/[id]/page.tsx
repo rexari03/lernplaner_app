@@ -146,7 +146,7 @@ const ProfilePage = ({ params }: { params: Params }) => {
                                 <Form.Group className="mb-3" controlId="formBasicClass">
                                     <Form.Label>Klasse</Form.Label>
                                     <Form.Select name="school_class" value={school_class} onChange={(e) => setSchoolClass(e.target.value)} disabled={!isEditing}>
-                                        <option value="">{getClassName(user!.student!.school_class_id!)}</option>
+                                        <option value="">{user && user.student ? getClassName(user.student.school_class_id!) : ""}</option>
                                         {classes.map((schoolClass, index) => (
                                             <option key={index} value={schoolClass.id}>
                                                 {getClassName(schoolClass.id)}
