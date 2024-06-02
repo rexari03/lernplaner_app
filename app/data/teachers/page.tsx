@@ -95,7 +95,7 @@ const StudentsPage = () => {
                                 </thead>
                                 <tbody>
                                 {currentItems.map((teacher, index) => (
-                                    <tr key={index} onClick={() => router.push(`/data/profile/${teacher.account.username}`)}>
+                                    <tr key={index} onClick={() => router.push(`/data/teacher/${teacher.account.username}`)}>
                                         <td>{teacher.id}</td>
                                         <td>{teacher.account.username}</td>
                                         <td>{teacher.account.name}</td>
