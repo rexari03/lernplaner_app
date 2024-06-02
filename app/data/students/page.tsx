@@ -109,30 +109,32 @@ const StudentsPage = () => {
                     </Button>
                     {students.length > 0 ? (
                         <>
-                            <Table striped bordered hover>
-                                <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Benutzername</th>
-                                    <th>Name</th>
-                                    <th>Nachname</th>
-                                    <th>Geburtstag</th>
-                                    <th>Klasse</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {calculatePagination().currentItems.map((student, index) => (
-                                    <tr key={index} onClick={() => router.push(`/data/student/${student.account.username}`)}>
-                                        <td>{student.id}</td>
-                                        <td>{student.account.username}</td>
-                                        <td>{student.account.name}</td>
-                                        <td>{student.account.last_name}</td>
-                                        <td>{student.account.birthday}</td>
-                                        <td>{getClassName(student.school_class_id)}</td>
+                            <div className="table-responsive">
+                                <Table striped bordered hover>
+                                    <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Benutzername</th>
+                                        <th>Name</th>
+                                        <th>Nachname</th>
+                                        <th>Geburtstag</th>
+                                        <th>Klasse</th>
                                     </tr>
-                                ))}
-                                </tbody>
-                            </Table>
+                                    </thead>
+                                    <tbody>
+                                    {calculatePagination().currentItems.map((student, index) => (
+                                        <tr key={index} onClick={() => router.push(`/data/student/${student.account.username}`)}>
+                                            <td>{student.id}</td>
+                                            <td>{student.account.username}</td>
+                                            <td>{student.account.name}</td>
+                                            <td>{student.account.last_name}</td>
+                                            <td>{student.account.birthday}</td>
+                                            <td>{getClassName(student.school_class_id)}</td>
+                                        </tr>
+                                    ))}
+                                    </tbody>
+                                </Table>
+                            </div>
                             <div className={"d-flex justify-content-center"}>
                                 <button onClick={handlePrevious}
                                         className="btn btn-outline-secondary mx-2">

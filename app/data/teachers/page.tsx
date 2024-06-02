@@ -11,7 +11,7 @@ import Button from "react-bootstrap/Button";
 import AddStudentForm from "@/components/add-student-form";
 import AddTeacherForm from "@/components/add-teacher-form";
 
-const StudentsPage = () => {
+const TeachersPage = () => {
     const [students, setStudents] = useState<Teacher[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(20);
@@ -83,28 +83,30 @@ const StudentsPage = () => {
                     </Button>
                     {students.length > 0 ? (
                         <>
-                            <Table striped bordered hover>
-                                <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Benutzername</th>
-                                    <th>Name</th>
-                                    <th>Nachname</th>
-                                    <th>Kürzel</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {currentItems.map((teacher, index) => (
-                                    <tr key={index} onClick={() => router.push(`/data/teacher/${teacher.account.username}`)}>
-                                        <td>{teacher.id}</td>
-                                        <td>{teacher.account.username}</td>
-                                        <td>{teacher.account.name}</td>
-                                        <td>{teacher.account.last_name}</td>
-                                        <td>{teacher.abbreviation}</td>
+                            <div className="table-responsive">
+                                <Table striped bordered hover>
+                                    <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Benutzername</th>
+                                        <th>Name</th>
+                                        <th>Nachname</th>
+                                        <th>Kürzel</th>
                                     </tr>
-                                ))}
-                                </tbody>
-                            </Table>
+                                    </thead>
+                                    <tbody>
+                                    {currentItems.map((teacher, index) => (
+                                        <tr key={index} onClick={() => router.push(`/data/teacher/${teacher.account.username}`)}>
+                                            <td>{teacher.id}</td>
+                                            <td>{teacher.account.username}</td>
+                                            <td>{teacher.account.name}</td>
+                                            <td>{teacher.account.last_name}</td>
+                                            <td>{teacher.abbreviation}</td>
+                                        </tr>
+                                    ))}
+                                    </tbody>
+                                </Table>
+                            </div>
                             <div className={"d-flex justify-content-center"}>
                                 <button onClick={handlePrevious} disabled={currentPage === 1}
                                         className="btn btn-outline-secondary mx-2">
@@ -124,4 +126,4 @@ const StudentsPage = () => {
     );
 }
 
-export default StudentsPage;
+export default TeachersPage;

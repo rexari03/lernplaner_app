@@ -85,26 +85,28 @@ const UsersPage = () => {
                     </Button>
                     {users.length > 0 ? (
                         <>
-                            <Table striped bordered hover>
-                                <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Nachname</th>
-                                    <th>Geburtstag</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {currentItems.map((User, index) => (
-                                    <tr key={index} onClick={() => router.push(`/data/profile/${User.username}`)}>
-                                        <td>{User.id}</td>
-                                        <td>{User.name}</td>
-                                        <td>{User.last_name}</td>
-                                        <td>{User.birthday}</td>
+                            <div className="table-responsive">
+                                <Table striped bordered hover>
+                                    <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Nachname</th>
+                                        <th>Geburtstag</th>
                                     </tr>
-                                ))}
-                                </tbody>
-                            </Table>
+                                    </thead>
+                                    <tbody>
+                                    {currentItems.map((User, index) => (
+                                        <tr key={index} onClick={() => router.push(`/data/profile/${User.username}`)}>
+                                            <td>{User.id}</td>
+                                            <td>{User.name}</td>
+                                            <td>{User.last_name}</td>
+                                            <td>{User.birthday}</td>
+                                        </tr>
+                                    ))}
+                                    </tbody>
+                                </Table>
+                            </div>
                             <div className={"d-flex justify-content-center"}>
                                 <button onClick={handlePrevious}
                                         className="btn btn-outline-secondary mx-2">
