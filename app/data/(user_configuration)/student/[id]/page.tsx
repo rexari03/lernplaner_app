@@ -7,6 +7,8 @@ import { Container, Card, Spinner, Row, Col, Form, Button } from 'react-bootstra
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useRouter } from 'next/navigation'
 import {Class} from "@/types/class";
+import {getAllClasses} from "@/api/classService";
+import {updateStudentByUsername} from "@/api/studentService";
 
 interface Params {
     id: string;
@@ -20,6 +22,8 @@ const ProfilePage = ({ params }: { params: Params }) => {
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [birthday, setBirthday] = useState("");
+    const [school_class, setSchoolClass] = useState<string>("");
+    const [classes, setClasses] = useState<Class[]>([]);
 
     const [isEditing, setIsEditing] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
@@ -27,6 +31,7 @@ const ProfilePage = ({ params }: { params: Params }) => {
 
     useEffect(() => {
         const fetchUser = async () => {
+            setIsLoading(true);
             const user = await getUserByUsername(params.id);
             setUser(user);
             setUsername(user.username);
@@ -34,8 +39,16 @@ const ProfilePage = ({ params }: { params: Params }) => {
             setLastName(user.last_name);
             setEmail(user.email);
             setBirthday(user.birthday);
+            setSchoolClass(user.student!.school_class.id.toString())
             setIsLoading(false);
         }
+        const fetchClasses = async () => {
+            setIsLoading(true);
+            const classes: Class[] = await getAllClasses();
+            setClasses(classes);
+            setIsLoading(false);
+        }
+        fetchClasses();
         fetchUser();
     }, [params.id]);
 
@@ -71,8 +84,19 @@ const ProfilePage = ({ params }: { params: Params }) => {
         };
         setIsLoading(true);
         await updateUserByUsername(updatedUser, user!.username);
+        await updateStudentByUsername(user!.username, {school_class_id: school_class});
         setIsEditing(false);
         setIsLoading(false);
+    }
+
+    function getClassName(school_class_id: number): string {
+        let className = "";
+        classes.forEach(oneClas => {
+            if (oneClas.id == school_class_id) {
+                className = oneClas.grade_id + oneClas.name;
+            }
+        })
+        return className
     }
 
     if (isLoading) {
@@ -116,8 +140,19 @@ const ProfilePage = ({ params }: { params: Params }) => {
                                     <Form.Control type="email" value={email} onChange={(e) => setEmail(e.target.value)} disabled={!isEditing} />
                                 </Form.Group>
                                 <Form.Group controlId="birthday">
-                                    <Form.Label>Birthday</Form.Label>
+                                    <Form.Label>Geburtstag</Form.Label>
                                     <Form.Control type="date" value={birthday} onChange={(e) => setBirthday(e.target.value)} disabled={!isEditing} />
+                                </Form.Group>
+                                <Form.Group className="mb-3" controlId="formBasicClass">
+                                    <Form.Label>Klasse</Form.Label>
+                                    <Form.Select name="school_class" value={school_class} onChange={(e) => setSchoolClass(e.target.value)} disabled={!isEditing}>
+                                        <option value="">{getClassName(user!.student!.school_class_id!)}</option>
+                                        {classes.map((schoolClass, index) => (
+                                            <option key={index} value={schoolClass.id}>
+                                                {getClassName(schoolClass.id)}
+                                            </option>
+                                        ))}
+                                    </Form.Select>
                                 </Form.Group>
                                 {isEditing && <Button type="submit" variant="primary" className={"mt-3"}>Save</Button>}
                             </Form>

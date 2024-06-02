@@ -97,7 +97,7 @@ const UsersPage = () => {
                                 <tbody>
                                 {currentItems.map((User, index) => (
                                     <tr key={index} onClick={() => router.push(`/data/profile/${User.username}`)}>
-                                        <td>{User.username}</td>
+                                        <td>{User.id}</td>
                                         <td>{User.name}</td>
                                         <td>{User.last_name}</td>
                                         <td>{User.birthday}</td>

@@ -1,6 +1,7 @@
 import {StudentBrief} from "@/types/studentBrief";
 import {Teacher} from "@/types/teacher";
 import {Parent} from "@/types/parent";
+import {StudentInfo} from "@/types/studentInfo";
 
 export type User = {
     id: string;
@@ -10,7 +11,7 @@ export type User = {
     username: string;
     email: string;
     contacts?: Contact[];
-    student?: StudentBrief;
+    student?: StudentInfo;
     parent?: Parent;
     teacher?: Teacher;
 }
