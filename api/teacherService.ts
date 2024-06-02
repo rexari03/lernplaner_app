@@ -42,3 +42,17 @@ export const addNewTeacher = async (
 
     return response.status;
 }
+
+export const updateTeacherByUsername = async (username: string, payload: {abbreviation: string}) => {
+    const headers = {
+        'Authorization': `Bearer ${process.env.NEXT_PUBLIC_AUTH_TOKEN}`,
+    };
+    const response = await fetch(`https://wndbi.philipptrashman.dev/api/users/${username}/teacher`, {
+        method: 'PUT',
+        headers,
+        mode: 'cors',
+        body: JSON.stringify(payload)
+    })
+
+    return response.status;
+};
