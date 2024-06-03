@@ -18,7 +18,7 @@ const StudentsPage = () => {
 
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(20);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [showAddForm, setShowAddForm] = useState(false);
 
     const router = useRouter();
@@ -33,7 +33,6 @@ const StudentsPage = () => {
     }
 
     useEffect( () => {
-        setIsLoading(true);
         fetchStudents();
         fetchClasses();
         setIsLoading(false);
@@ -78,6 +77,18 @@ const StudentsPage = () => {
             }
         })
         return className
+    }
+
+    if (isLoading) {
+        return (
+            <div className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
+                <div style={{ width: '3rem', height: '3rem' }}>
+                    <Spinner animation="border" role="status" style={{ width: '100%', height: '100%' }}>
+                        <span className="visually-hidden">Loading...</span>
+                    </Spinner>
+                </div>
+            </div>
+        );
     }
 
     if (isLoading) {

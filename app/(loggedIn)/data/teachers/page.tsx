@@ -15,13 +15,12 @@ const TeachersPage = () => {
     const [students, setStudents] = useState<Teacher[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(20);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [showAddForm, setShowAddForm] = useState(false);
 
     const router = useRouter();
 
     const fetchTeachers = async () => {
-        setIsLoading(true);
         const users: Teacher[] = await getAllTeachers();
         setStudents(users);
         setIsLoading(false);

@@ -14,12 +14,11 @@ const UsersPage = () => {
     const [users, setUsers] = useState<Account[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(20);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [showAddForm, setShowAddForm] = useState(false);
     const router = useRouter();
 
     const fetchUsers = async () => {
-        setIsLoading(true);
         const users: Account[] = await getAllUsers();
         setUsers(users);
         setIsLoading(false);
