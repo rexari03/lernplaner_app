@@ -1,3 +1,5 @@
+"use client"
+
 import {FormEvent, useState} from 'react';
 import {loginUser} from "@/api/authService";
 import {useRouter} from "next/navigation";
