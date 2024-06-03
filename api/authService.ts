@@ -1,28 +1,22 @@
-export const loginUser = async (username: string, password: string) => {
+export const loginUser = async (email: string, pass: string) => {
     const headers = {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${process.env.NEXT_PUBLIC_AUTH_TOKEN}`,
     };
 
-    const body = JSON.stringify({
-        "username": username,
-        "password": password
-    });
-
     const response = await fetch('https://wndbi.philipptrashman.dev/api/login', {
         method: 'POST',
         headers,
-        body,
-        mode: 'cors'
-    });
+        mode: 'cors',
+        body: JSON.stringify({
+            "username": email,
+            "password": pass
+        } )
+    })
 
     if (response.status != 200) {
-        response.text().then(content => {
-            console.log(content);
-        });
+        return 401
     } else {
-        const content = await response.json();
-        console.log(content);
-        return content;
+        return await response.json();
     }
 };

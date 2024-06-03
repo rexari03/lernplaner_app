@@ -16,7 +16,7 @@ const NavBar = () => {
                 <Navbar.Toggle aria-controls="navbarScroll" />
                 <Navbar.Collapse id="navbarScroll">
                     <Nav className="mxe-auto">
-                        <Nav.Link href="/" className={pathname == "/" ? "active" : ""}>Home</Nav.Link>
+                        <Nav.Link href="/home" className={pathname == "/home" ? "active" : ""}>Home</Nav.Link>
                         <Nav.Link href="/about" className={pathname == "/about" ? "active" : ""}>Über uns</Nav.Link>
                         {
                             isLoggedIn ? (
@@ -42,8 +42,8 @@ const NavBar = () => {
                                     <Nav.Link href="/data/users"
                                               className={pathname == "/data/users" ? "active" : ""}>Benutzerverwaltung</Nav.Link>
 
-                                    <Nav.Link href="/logout"
-                                              className={pathname == "/logout" ? "active" : ""}>Logout</Nav.Link>
+                                    <Nav.Link href="/"
+                                              className={pathname == "/" ? "active" : ""}>Logout</Nav.Link>
                                 </>
                             ) : (
                                 <>
