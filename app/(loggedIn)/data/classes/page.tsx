@@ -16,27 +16,24 @@ const StudentsPage = () => {
     const [classes, setClasses] = useState<Class[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(20);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [showAddForm, setShowAddForm] = useState(false);
     const [teachers, setTeachers] = useState<Teacher[]>([]);
 
     const fetchClasses = async () => {
-        setIsLoading(true);
         const users: Class[] = await getAllClasses();
         setClasses(users);
-        setIsLoading(false);
     }
 
     const fetchTeachers = async () => {
-        setIsLoading(true);
         const users: Teacher[] = await getAllTeachers();
         setTeachers(users);
-        setIsLoading(false);
     }
 
     useEffect(() => {
         fetchClasses();
         fetchTeachers();
+        setIsLoading(false);
     }, []);
 
     const indexOfLastItem = currentPage * itemsPerPage;
